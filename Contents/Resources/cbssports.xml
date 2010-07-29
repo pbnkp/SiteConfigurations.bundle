@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.cbssports.com/video/player"
+	    plugin="http://www.cbs.com/thunder/player.*swf"
+			initialState="playing"
+			randomAgent="true"
+			version="1.0">
+
+	<pre m="http://www.cbs.com/thunder/" />
+	<crop x="0" y="3" width="490" height="373" />
+
+	<seekbar type="simple">
+		<start x="1" y="375" />
+		<end   x="497" y="375" />
+		<played>
+				<color rgb="999898" />
+		</played>
+	</seekbar>
+			
+	<!-- PLAYING -->
+	<state name="playing">
+		
+		<!-- Video ends -->
+		<event>
+			<condition>
+				<and>
+					<color x="59" y="160" rgb="ffffff" />
+					<color x="61" y="162" rgb="4d4d4d" />
+					<color x="64" y="167" rgb="ffffff" />
+				</and>
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+	</state>
+</site>

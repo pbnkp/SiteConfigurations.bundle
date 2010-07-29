@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://demand.five.tv" plugin="http://demand.five.tv/swf/Player.swf" initialState="playing" version="1.0">
+			
+	<crop x="2" y="4" width="568" height="319" />
+
+	<seekbar type="thumb">
+		<start x="36" y="460" />
+		<end   x="442" y="460" />
+		<played>
+				<color rgb="a0919a" />
+				<!-- <color rgb="585858" />
+				<color rgb="484848" /> 
+				<color rgb="3f3f3f" />-->
+		</played>
+	</seekbar>
+	
+	<!-- PLAYING -->
+	<state name="playing">
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="9" y="351" />
+				<goto state="paused" />
+			</action>  
+		</event>
+	</state>
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="9" y="351" />
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+</site>

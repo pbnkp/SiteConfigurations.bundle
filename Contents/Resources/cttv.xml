@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Define SITE & FLASH-Player -->
+
+<site	site		="http://www.heise.de"
+	plugin		="http://www.heise.de/extras/streaming/videoplayer*"
+	initialState	="loading"
+	version		="1.0">
+
+<!-- Define FLASH Video size y = 358 is buttom of flash screen; cutting off the "control" bar -->
+
+	<crop x="1" y="1" width="640" height="358" />
+
+<!-- Define Seekbar -->
+
+	<seekbar type="simple">
+		<start x="106" y="379" />
+		<end   x="450" y="379" />
+		<played>
+			<color rgb="666666" />
+		</played>
+	</seekbar>
+
+<!-- Define PAUSE Video condition -->
+
+	<condition name="playcon">
+		<or>
+			<color x="48"  y="376" rgb="323232" />
+			<color x="48"  y="376" rgb="363636" />
+			<color x="48"  y="376" rgb="2F2F2F" />
+		</or>
+	</condition>
+
+<!-- Define PLAYING Video condition -->
+
+	<condition name="pausecon">
+		<color x="48"  y="378" rgb="FFFFFF" />
+	</condition>
+
+<!-- Define END Video condition -->
+
+	<condition name="endcon">
+		<color x="48" y="383" rgb="000000" />
+	</condition>
+
+<!-- Define STARTUP condition -->
+
+	<condition name="startup">
+		<color x="320" y="178" rgb="A9A8A6" />
+	</condition>
+
+<!-- INITIALIZE -->
+	<state name="loading">
+		<event>
+
+     			<condition>
+				<condition name="playcon" />
+      			</condition>
+
+     			 <action>
+				<click x="320" y="198"/>
+        			<goto state="playing"/>
+      			</action>
+
+    		</event>
+
+		<!--The video take some time to load. So we click into the middle of the flash until it starts playing.-->
+		<event>
+
+     			<condition>
+				<not>
+					<condition name="playcon" />
+				</not>
+      			</condition>
+
+     			 <action>
+				<click x="320" y="198"/>
+        			<goto state="loading"/>
+      			</action>
+
+    		</event>
+
+	</state>
+<!-- Video Started -->
+
+<!-- PLAYING START -->
+	<state name="playing">
+
+		<!-- Click to pause -->
+		<event>
+
+			<condition>
+				<command name="pause" />
+			</condition>
+
+			<action>
+				<click x="48" y="375" />
+				<goto state="paused" />
+			</action>
+
+		</event>
+
+		<!-- Detect paused video -->
+		<event>
+
+			<condition>
+				<condition name="pausecon" />
+			</condition>
+
+			<action>
+				<goto state="paused" />
+			</action>
+
+		</event>
+
+		<!-- Video ends -->
+		<event>
+
+			<condition>
+				<condition name="endcon" />
+			</condition>
+
+			<action>
+				<goto state="end" />
+			</action>
+
+		</event>
+
+	</state>
+<!-- PLAYING END -->
+
+<!-- PAUSED START -->
+	<state name="paused">
+
+		<!-- Click to play -->
+		<event>
+
+			<condition>
+				<command name="play" />
+			</condition>
+
+			<action>
+				<click x="48" y="375" />
+				<goto state="playing" />
+			</action>
+
+		</event>
+
+		<!-- Detect playing video -->
+		<event>
+
+			<condition>
+				<condition name="playcon" />
+			</condition>
+
+			<action>
+				<goto state="playing" />
+			</action>
+
+		</event>
+
+	</state>
+<!-- PAUSED END -->
+
+</site>

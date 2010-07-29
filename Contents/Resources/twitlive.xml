@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://live.twit.tv"
+	    plugin="http://bitcast-b.bitgravity.com/"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="640" height="360" />
+
+	<seekbar type="simple">
+		<start x="0" y="0" />
+		<end   x="1" y="0" />
+		<played>
+		</played>
+	</seekbar>
+	
+	<!-- PLAYING -->
+	<state name="playing">
+	</state>
+</site>

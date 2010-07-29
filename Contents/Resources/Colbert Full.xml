@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.comedycentral.com/colbertreport/full-episodes/"
+	    plugin="http://media.mtvnservices.com/mgid:cms:fullepisode:comedycentral.*"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="640" height="479" />
+
+	<seekbar type="thumb">
+		<start x="61" y="494" />
+		<end   x="430" y="494" />
+		<played>
+			<color rgb="fcfdfd" />
+		</played>
+	</seekbar>
+				
+<!-- Set Colors for Paused Video -->
+    <condition name="paused">
+			<and>
+				<color x="17"  y="487" rgb="ffffff" />
+                <color x="33"  y="495" rgb="ffffff" />
+				<color x="17"  y="503" rgb="ffffff" />
+			</and>
+	</condition>
+    
+<!-- PLAYING -->
+	<state name="playing">
+		
+<!-- Click to pause -->
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="25" y="500" />
+			</action>
+		</event>
+
+<!-- Detect paused video -->
+		<event>
+			<condition>
+				<condition name="paused" />
+			</condition>
+			<action>
+				<goto state="paused" />
+			</action>
+		</event>
+		
+<!-- Video ends -->
+		<event>
+			<condition>
+				<and>
+					<color x="457" y="494" rgb="fcfdfd" />
+				</and>
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+<!-- PAUSED -->
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="25" y="500" />
+			</action>
+		</event>
+        		
+<!-- Go To Playing -->
+		<event>
+			<condition>
+				<not>
+					<condition name="paused" />
+				</not>
+			</condition>
+			<action>
+				<goto state="playing" />
+            </action>
+        </event>
+        
+	</state>
+        
+</site>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://mmod.ncaa.com"
+	    plugin="silverlight"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="20" y="183" width="784" height="432" />
+	
+	<seekbar type="simple">
+		<start x="112"  y="-55" />
+		<end   x="-154" y="-55" />
+		<played>
+				<color rgb="a0a0a0" />
+		</played>
+	</seekbar>
+	
+	<!-- PLAYING -->
+	<state name="playing">
+	</state>	
+</site>

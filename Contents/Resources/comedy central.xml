@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://.*.comedycentral.com"
+	    plugin="http://media.mtvnservices.com/mgid:cms:video:comedycentral.com"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="480" height="360" />
+
+	<condition name="paused">
+		<or>
+			<and>
+				<!-- Regular paused -->
+				<color x="16"  y="366" rgb="8a8a8a" />
+				<color x="24"  y="371" rgb="8c8c8c" />
+				<color x="16"  y="376" rgb="9a9a9a" />
+			</and>
+			<and>
+				<!-- Sometimes it's a funky color paused -->            
+				<color x="16"  y="366" rgb="ffffff" />
+				<color x="24"  y="371" rgb="ffffff" />
+				<color x="16"  y="376" rgb="ffffff" />
+				<color x="10"  y="372" rgb="67b6da" />
+			</and>
+		</or>
+	</condition>
+
+	<seekbar type="thumb">
+		<start x="44" y="369" />
+		<end   x="291" y="369" />
+		<played>
+			<color rgb="d3d3d3" />
+		</played>
+	</seekbar>
+
+	<!-- PLAYING -->
+	<state name="playing">
+		
+		<!-- Click to pause -->
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="19" y="371" />
+			</action>
+		</event>
+
+		<!-- Detect paused video -->
+		<event>
+			<condition>
+				<condition name="paused" />
+			</condition>
+			<action>
+				<goto state="paused" />
+			</action>
+		</event>
+		
+		<!-- Video ends -->
+		<event>
+			<condition>
+					<color x="316" y="370" rgb="fcfcfc" />
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		
+		<!-- Wait for play command -->
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="19" y="371" />
+			</action>
+		</event>
+		
+		<event>
+			<condition>
+				<not>
+					<condition name="paused" />
+				</not>
+			</condition>
+			<action>
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+</site>

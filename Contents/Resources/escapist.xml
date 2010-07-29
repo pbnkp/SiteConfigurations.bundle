@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.escapistmagazine.com"
+	    plugin="http://static.escapistmagazine.com/media/global/movies/player/flowplayer.commercial-3.0.3.swf"
+       initialState="buffering"
+			version="1.0">
+			
+	<crop x="0" y="0" width="650" height="365" />
+
+	<seekbar type="simple">
+		<start x="30" y="378" />
+		<end   x="458" y="378" />
+		<played>
+				<color rgb="3E829A" />
+		</played>
+	</seekbar>
+
+  <condition name="paused">
+    <and>
+      <!-- Points of the litte play triangle -->
+      <color x="14" y="376" rgb="ffffff" />
+      <color x="14" y="381" rgb="ffffff" />
+      <color x="18" y="378" rgb="ffffff" />
+    </and>
+  </condition>
+
+  <!-- BUFFERING -->
+	<state name="buffering">
+		<event>
+      <condition>
+        <condition name="paused"/>
+      </condition>
+			<action>
+				<click x="326" y="184" />
+				<goto state="playing"/>
+			</action>
+		</event>
+	</state>
+
+	<!-- PLAYING -->
+	<state name="playing">
+		
+		<!-- Click to pause -->
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="16" y="378" />
+				<goto state="paused" />
+			</action>
+		</event>
+		
+		<!-- Video ends -->
+		<event>
+			<condition>
+				<color x="455" y="378" rgb="3E829A" />
+			</condition>
+			<action>
+			  <pause time="2000" />
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="16" y="378" />
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+	
+</site>

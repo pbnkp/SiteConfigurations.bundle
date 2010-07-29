@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.guardian.co.uk/.*" plugin="http://c.brightcove.com/.*" initialState="loading" version="1.0">
+  <crop x="0" y="0" width="460" height="345"/>
+
+  <seekbar type="simple">
+    <start x="35" y="358"/>
+    <end x="376" y="358"/>
+    <played>
+      <color rgb="666666"/>
+    </played>
+  </seekbar>
+
+  <state name="loading">
+    <!-- When the central play button appears start the video -->
+    <event>
+      <condition>
+        <!-- Check video is ready to play -->
+        <and>
+          <!-- Central Play Button -->
+          <color x="224" y="161" rgb="ffffff"/>
+          <color x="224" y="169" rgb="ffffff"/>
+          <color x="232" y="164" rgb="ffffff"/>
+          <!-- Progress bar is displayed -->
+          <color x="67" y="359" rgb="c4c4c4"/>
+        </and>
+      </condition>
+      <action>
+        <!-- Click the play button after a short delay -->
+        <pause time="500"/>
+        <!-- For some reason it is necessary to click it twice -->
+        <click x="229" y="164"/>
+        <pause time="100"/>
+        <click x="229" y="164"/>
+        <goto state="playing"/>
+      </action>
+    </event>
+  </state>
+
+  <state name="playing">
+    <event>
+      <!-- User requested a pause, ignore this request when an advert is playing -->
+      <condition>
+        <and>
+          <command name="pause"/>
+          <not>
+            <condition name="advert"/>
+          </not>
+        </and>
+      </condition>
+      <action>
+        <!-- Just click in the middle of the player -->
+        <click x="229" y="164"/>
+      </action>
+    </event>
+
+    <!-- Detect paused video -->
+    <event>
+      <condition>
+        <condition name="paused"/>
+      </condition>
+      <action>
+        <goto state="paused"/>
+      </action>
+    </event>
+
+    <!-- Video ends -->
+    <event>
+      <condition>
+        <!-- Reached the end of the progress bar -->
+        <color x="375" y="358" rgb="666666"/>
+      </condition>
+      <action>
+        <pause time="1000"/>
+        <goto state="end"/>
+      </action>
+    </event>
+  </state>
+ 
+  <!-- Paused -->
+  <state name="paused">
+    <event>
+      <condition>
+        <command name="play"/>
+      </condition>
+      <action>
+        <click x="229" y="164"/>
+      </action>
+    </event>
+ 
+    <!-- Go To Playing -->
+    <event>
+      <condition>
+        <not>
+          <condition name="paused"/>
+        </not>
+      </condition>
+      <action>
+        <goto state="playing"/>
+      </action>
+    </event>
+  </state>
+<!-- Conditions -->
+
+  <!-- Paused Video Condition - A central 'resume' button appears when the video is paused -->
+  <condition name="paused">
+    <and>
+      <!-- Play button is shown at the left end of the bar -->
+      <color x="14" y="356" rgb="ffffff"/>
+      <color x="14" y="363" rgb="ffffff"/>
+      <color x="10" y="359" rgb="666666"/>
+    </and>
+  </condition>
+
+  <!-- Advert is running condition -->
+  <condition name="advert">
+    <and>
+      <!-- Check for a pause button at the left end of the bar and no progress bar -->
+      <color x="7" y="358" rgb="666666"/>
+      <color x="210" y="358" rgb="ffffff"/>
+      <color x="230" y="358" rgb="ffffff"/>
+    </and>
+  </condition>
+</site>

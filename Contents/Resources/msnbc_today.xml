@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://today.msnbc.msn.com/id/26184891"
+	    plugin="http://msnbcmedia.msn.com/i/MSNBC/Components/Video/_Player/swfs/*"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="352" y="92" width="596" height="331" />
+	
+	<seekbar type="thumb">
+		<start x="354" y="456" />
+		<end   x="945" y="456" />
+		<played>
+				<color rgb="e6e4e7" />
+		</played>
+	</seekbar>
+	
+	<!-- PLAYING -->
+	<state name="playing">
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="475" y="480" />
+				<goto state="paused" />
+			</action>
+		</event>
+		
+		<!-- Video ends -->
+		<event>
+			<condition>
+				<and>
+					<color x="75" y="400" rgb="252525" />
+					<color x="200" y="400" rgb="252525" />
+					<color x="75" y="350" rgb="252525" />
+					<color x="200" y="350" rgb="252525" />
+				</and>			
+                </condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="475" y="480" />
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+</site>

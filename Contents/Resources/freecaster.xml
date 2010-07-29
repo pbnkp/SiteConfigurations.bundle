@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.freecaster.tv"
+	    plugin="http://play.freecaster.com/player/FCPlayer.swf"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="1" y="1" width="638" height="359" />
+	
+	<seekbar type="simple">
+		<start x="128" y="368" />
+		<end   x="466" y="368" />
+		<played>
+			<condition>
+				<color op="dimmer-than" rgb="9c9c9c" />
+			</condition>
+		</played>
+	</seekbar>
+	
+	<condition name="paused">
+		<and>
+   		<color x="253"  y="162" rgb="FFFFFF" />
+			<color x="251"  y="162" op="brighter-than" rgb="ffffff" />
+			<color x="286"  y="163" rgb="FFFFFF" />
+			<color x="285"  y="163" op="brighter-than" rgb="ffffff" />
+			<color x="321"  y="164" rgb="FFFFFF" />
+			<color x="320"  y="164" op="brighter-than" rgb="ffffff" />
+		</and>
+  </condition>
+
+	<!-- PLAYING -->
+	<state name="playing">
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="18" y="368" />
+			</action>
+		</event>
+		
+		<event>
+			<condition>
+				<condition name="paused" />
+			</condition>
+			<action>
+				<goto state="paused" />
+			</action>
+		</event>
+		
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="18" y="367" />
+			</action>
+		</event>
+		
+		<event>
+			<condition>
+				<not>
+					<condition name="paused" />
+				</not>
+			</condition>
+			<action>
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+</site>

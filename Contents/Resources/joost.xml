@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://.*joost.com"
+	    plugin="http://.*.joost.com/player/bin/joostPlayer.swf"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="640" height="360" />
+
+	<seekbar type="simple">
+		<start x="50" y="50" />
+		<end   x="60" y="50" />
+		<played>
+				<color rgb="898989" />
+				<color rgb="909090" />
+				<color rgb="888888" />
+		</played>
+	</seekbar>
+	
+	<!-- PLAYING -->
+	<state name="playing">
+		 <!-- Click to pause -->
+     <event>
+             <condition>
+                     <command name="pause" />
+             </condition>
+             <action>
+                     <click x="324" y="327" />
+             </action>
+     </event>
+	</state>
+	
+</site>

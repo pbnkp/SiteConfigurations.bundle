@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://abc.go.com/player"
+	    plugin="http://ll.static.abc.com"
+      initialState="firstPage"
+			allowPopups="true"
+			version="1.0">
+			
+	<crop x="40" y="0" width="638" height="478" />
+
+	<seekbar type="simple">
+		<start x="33" y="490" />
+		<end   x="601" y="490" />
+		<played>
+				<color rgb="ffcc00" />
+				<color rgb="ffffff" />
+		</played>
+	</seekbar>
+	
+	<!-- First page loading -->
+	<state name="firstPage">
+		<event>
+			<condition>
+				<frameLoaded />
+			</condition>
+			<action>
+				<run script="abcdm.abc.com.utils.lightfep.launch()" />
+				<goto state="buffering" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- BUFFERING -->
+	<state name="buffering">
+	</state>
+</site>

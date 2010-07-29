@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://vimeo.com"
+	    plugin="http://vimeo.com/moogaloop_local.swf"
+			initialState="buffering"
+			version="1.0">
+			
+	<crop x="0" y="0" width="0" height="0" />
+	
+	<seekbar type="simple">
+		<start x="62" y="290" />
+		<end   x="387" y="290" />
+		<played>
+		</played>
+	</seekbar>
+	
+	<!-- watch for the play icon, which means we're paused -->
+	<condition name="paused">
+		<and>
+			<color x="34" y="-38" rgb="ffffff" />
+			<color x="49" y="-30" rgb="ffffff" />
+			<color x="34" y="-22" rgb="ffffff" />
+			<or>
+				<color x="44" y="-36" op="dimmer-than" rgb="222222" />
+				<color x="44" y="-36" rgb="00adef" />
+			</or>
+		</and>
+	</condition>
+
+	<!-- watch for the pause icon, which means we're playing -->
+	<condition name="playing">
+		<and>
+			<color x="1" y="18" rgb="130006" />
+			<color x="36" y="-30" rgb="ffffff" />
+			<color x="48" y="-30" rgb="ffffff" />
+			<or>
+				<color x="42" y="-30" op="dimmer-than" rgb="222222" />
+				<color x="44" y="-36" rgb="00adef" />
+			</or>
+		</and>
+	</condition>
+	
+	<!-- BUFFERING -->
+	<state name="buffering">
+		<event>
+			<condition>
+				<condition name="paused" />
+			</condition>
+			<action>
+				<pause time="2000" />
+				<click x="100" y="100" />
+			</action>
+		</event>
+
+		<event>
+			<condition>
+				<condition name="playing" />
+			</condition>
+			<action>
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PLAYING -->
+	<state name="playing">
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<move x="92" y="345" />
+				<pause time="500" />
+				<click x="38" y="330" />
+			</action>
+		</event>
+		
+		<event>
+			<condition>
+				<condition name="paused" />
+			</condition>
+			<action>
+				<goto state="paused" />
+			</action>
+		</event>
+		
+		<!-- Video ends -->
+		<event>
+			<condition>
+				<url matches="player/embed/AS3/endslate" />
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="38" y="-30" />
+				<move x="0" y="0" />
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+</site>

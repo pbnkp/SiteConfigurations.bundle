@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.nbc.com/.*/clips/"
+	    plugin="http://video.nbc.com/embed/player_3-x/embedded.swf"
+       initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="511" height="288" />
+
+	<seekbar type="thumb">
+		<start x="105" y="299" />
+		<end   x="370" y="299" />
+		<played>
+                <color rgb="ffffff" />
+        </played>
+	</seekbar>
+
+	<!-- PLAYING -->
+	<state name="playing">
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="40" y="300" />
+				<goto state="paused" />
+			</action>
+		</event>
+		
+    <!-- Video ends -->
+		<event>
+			<condition>
+				<and>
+					<color x="370" y="299" rgb="ffffff" />
+				</and>
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="40" y="300" />
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+</site>

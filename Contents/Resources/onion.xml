@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://.*.theonion.com"
+	    plugin="http://www.theonion.com/content/themes/common/assets/onn_player.*.swf"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="85" y="40" width="461" height="360" />
+
+	<condition name="paused">
+				<color x="20"  y="489" rgb="737b89" />
+	</condition>
+
+	<seekbar type="thumb">
+		<start x="150" y="416" />
+		<end   x="384" y="416" />
+
+		<played>
+
+
+		</played>
+	</seekbar>
+
+	<!-- PLAYING -->
+	<state name="playing">
+		<event>
+			<condition>
+
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="114" y="419" />
+				<goto state="paused" />
+			</action>
+		</event>
+		
+		<!-- Video ends -->
+		<event>
+
+			<condition>
+				<url matches="player/embed/AS3/endslate" />
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="114" y="419" />
+				<goto state="playing" />
+			</action>
+
+		</event>
+	</state>
+</site>

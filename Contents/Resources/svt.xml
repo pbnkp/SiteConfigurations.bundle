@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://svtplay.se" plugin="http://svtplay.se/flash/svtplayer.swf" initialState="waiting-for-load" version="1.0" manualLock="true">
+    <crop x="0" y="0" width="640" height="360"/>
+
+    <seekbar type="simple">
+    	<start x="72" y="373"/>
+      <end x="470" y="374"/>
+			<dead x="0" y="0" />
+      <played>
+      	<color rgb="6cd338"/>
+       	<color rgb="6bd337"/>
+    		<color rgb="6fdd38"/>
+				<color rgb="6edb37"/>
+    		<color rgb="67c338"/>	            
+       	<color rgb="67c23a"/>
+      </played>
+    </seekbar>
+
+    <state name="waiting-for-load">
+        <event>
+            <condition>
+                <frameLoaded/>
+								<!-- wait until the frame loads... -->
+            </condition>
+            <action>
+                <lockPlugin/>
+								<!-- then perform plug-in matching! -->
+                <goto state="playing"/>
+            </action>
+        </event>
+    </state>
+   
+    <state name="playing">
+        <event>
+            <condition>
+                <command name="pause"/>
+            </condition>
+            <action>
+								<type key="32" />
+								<goto state="paused" />
+            </action>
+        </event>
+        <event>
+            <condition>
+                <and>
+                    <color x="352" y="180" rgb="1b4108"/>
+                    <color x="353" y="180" rgb="265b0a"/>
+                    <color x="354" y="180" rgb="2c6b0b"/>
+                </and>
+            </condition>
+            <action>
+                <goto state="end"/>
+            </action>
+        </event>
+    </state>
+
+		<state name="paused">
+			<event>
+          <condition>
+              <command name="play"/>
+          </condition>
+          <action>
+              <type key="32" />
+							<goto state="playing" />
+          </action>
+      </event>
+		</state>
+</site>
