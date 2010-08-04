@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <site site="http://mlb.mlb.com"
     plugin="http://mlb.mlb.com/flash/mediaplayer/v4/RC15/MediaPlayer4.swf"
     identifier="com.plexapp.plugins.mlb"
