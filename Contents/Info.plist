@@ -22,7 +22,7 @@
 	<string>1</string>
 	<key>PlexPluginMode</key>
 	<string>AlwaysOn</string>
-	<key>PlexResourceBundle</key>
-	<string>1</string>
+	<key>PlexPluginClass</key>
+	<string>Resource</string>
 </dict>
 </plist>
