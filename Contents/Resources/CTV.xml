@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://watch.(ctv.ca|ctv.ca/news|tsn.ca|discoverychannel.ca|thecomdeynetwork.ca|bravo.ca|bravofact.com|spacecast.com)/.*#Flash"
+	    plugin="http://watch.(ctv.ca|ctv.ca/news|tsn.ca|discoverychannel.ca|thecomdeynetwork.ca|bravo.ca|bravofact.com|spacecast.com)/.*player.swf.*"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="640" height="357" />
+
+
+	<seekbar type="thumb">
+		<start x="1" y="358" />
+		<end   x="639" y="358" />
+		<played>
+			<color rgb="5E0C01" />
+		</played>
+	</seekbar>
+
+	<!-- PLAYING -->
+	<state name="playing">
+		
+		<!-- Click to pause -->
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="22" y="332" />
+			</action>
+		</event>
+		
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		
+		<!-- Wait for play command -->
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="22" y="332" />
+			</action>
+		</event>
+		
+	</state>
+</site>
