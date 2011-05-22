@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://skyplayer.sky.com/vod/content"
+    plugin="silverlight"
+    identifier="com.plexapp.plugins.skyplayer"
+    initialState="wait-for-frame-load"
+    manualLock="true"
+    version="1.0">
+
+    <!-- The condition we use several times from within states to check if we're logged in or not -->
+    <condition name="need-to-login">
+        <and>
+            <!-- Check if a specific element exists in the page, for example the loginform -->
+            <!-- Returns true if we need to login -->
+            <javascript script="document.cookie.indexOf('; skySSO=')" matches="-1" />
+        </and>
+    </condition>
+
+    <!-- Wait for frame to load -->
+    <state name="wait-for-frame-load">
+        <event>
+            <condition>
+                <!-- Wait for the DOM to load... -->
+                <frameLoaded />
+            </condition>
+            <action>
+                <!-- ...then goto the 'check-for-auth' state -->
+                <goto state="check-for-auth" />
+            </action>
+        </event>
+    </state>
+
+    <!-- Check for auth -->
+    <state name="check-for-auth">
+        <event>
+            <condition>
+                <!-- If we don't need to login, goto state 'playing' -->
+                <not>
+                    <condition name="need-to-login" />
+                </not>
+            </condition>
+            <action>
+                <goto state="cleanup" />
+            </action>
+        </event>
+        <event>
+            <!-- If we *do* need to login, visit the login url and attempt to submit it -->
+            <condition>
+                <condition name="need-to-login" />
+            </condition>
+            <action>
+                <!-- The state machine will wait until the URL has fully loaded before moving -->
+                <!-- onto the next state. -->
+                <visit url="https://skyplayer.sky.com/vod/content/Home/Application_Navigation/Sign_in/content/login.do"/>
+                <goto state="try-to-login"/>
+            </action>
+        </event>
+    </state>
+
+    <!-- Try to login -->
+    <state name="try-to-login">
+        <event>
+            <condition>
+                <!-- No condition required -->
+                <javascript script="true ? 1 : 0" matches="1" />
+            </condition>
+            <action>
+                <!-- Fill in the username, password and nexturl of the page. -->
+                <!-- We need to submit the form so that the page's handlers can populate the other -->
+                <!-- required post data. -->
+                <run script="page='${url}';index=page.indexOf('/page/');document.login.userName.value='${username}';document.login.password.value='${password}';document.login.nextUrl.value=page.substring(index);document.login.submit();" />
+                <pause time="2000" />
+                <goto state="check-for-auth-again" />
+            </action>
+        </event>
+    </state>
+
+    <!-- Check for auth again -->
+    <state name="check-for-auth-again">
+        <event>
+            <condition>
+                <!-- If login was successful we should now not need to login and can go to the state 'cleanup' -->
+                <not>
+                    <condition name="need-to-login" />
+                </not>
+            </condition>
+            <action>
+                <visit url="${url}" />
+                <goto state="cleanup" />
+            </action>
+        </event>
+        <event>
+            <condition>
+                <!-- If we still need to login after we've tried to login, something is wrong... -->
+                <condition name="need-to-login" />
+            </condition>
+            <action>
+                <goto state="end" param="Please check your username and password in the plugin's settings" />
+            </action>
+        </event>
+    </state>
+
+    <!-- Cleanup -->
+    <state name="cleanup">
+        <event>
+            <condition>
+                <!-- We should wait until the DOM contains the main silverlight control. -->
+                <javascript script="silverlightControl != undefined" matches="1" />
+            </condition>
+            <action>
+                <!-- The live tv pages contain multiple silverlight controls which means that Plex -->
+                <!-- can easily select the wrong one. Therefore, we simplify the selection by removing -->
+                <!-- everything else from the page before progressing to the 'playing' state. -->
+                <run script="iframes = document.getElementsByTagName('iframe'); for (i=0; i&lt;iframes.length; i++){iframes[i].src='';}" />
+                <pause time="1000" />
+                <lockPlugin />
+                <goto state="silverlight-loading" />
+            </action>
+        </event>
+        <event>
+            <condition>
+                <!-- Check to see if the 'Play' button is visible. If this is false, then it's likely -->
+                <!-- that the user does not have permission to play this content. -->
+                <javascript script="$('#play_primary_meta_id_anchor').is(':visible')" matches="1" />
+            </condition>
+            <action>
+                <goto state="end" param="This title is not available on this machine for your Sky subscription" />
+            </action>
+        </event>
+    </state>
+
+    <!-- Wait for silverlight control to fully load -->
+    <state name="silverlight-loading">
+        <event>
+            <condition>
+                <javascript script="silverlightControl.IsLoaded ? 1 : 0" matches="1" />
+            </condition>
+            <action>
+                <!-- Click the play button located on the player -->
+                <pause time="500" />
+                <click x="275" y="125" skipMouseUp="true" />
+                <goto state="playing" />
+            </action>
+        </event>
+    </state>
+    
+    <!-- Playing -->
+    <state name="playing">
+        <event>
+            <condition>
+                <javascript script="true ? 1 : 0" matches="1" />
+            </condition>
+            <action>
+                <!-- Done! We don't need to do anything else here -->
+            </action>
+        </event>
+    </state>
+
+</site>
