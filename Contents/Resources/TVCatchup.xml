@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site site="http://.*tvcatchup.com" plugin="TVCatchupWebPlayer.swf" initialState="live" version="1.0">
-	<state name="live" />
-</site>
