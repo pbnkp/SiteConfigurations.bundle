@@ -4,6 +4,7 @@
 -->
 <site site="http://.*channel4.com.*"
 	plugin="4odplayer.*swf#4oD"
+	identifier="com.plexapp.plugins.4oD"
 	initialState="loading"
 	version="1.0">
 
