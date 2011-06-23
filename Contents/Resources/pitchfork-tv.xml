@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://pitchfork.com/tv/"
+	plugin="http://player.ooyala.com/static/cacheable/*"
+	agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"
+	initialState="wait-for-frame-load"
+	version="2.0">
+
+	<crop x="0" y="0" width="0" height="0" />
+
+	<seekbar type="javascript">
+		<percentComplete equals="(player.getPlayheadTime() / player.getTotalTime()) * 100.0" />
+		<bigStep minus="player.setPlayheadTime(player.getPlayheadTime() - 30)" plus="player.setPlayheadTime(player.getPlayheadTime() + 30)" />
+		<smallStep minus="player.setPlayheadTime(player.getPlayheadTime() - 5)" plus="player.setPlayheadTime(player.getPlayheadTime() + 5)" />
+		<end condition="player.getPlayheadTime() >= player.getTotalTime() - 1" />
+	</seekbar>
+
+	<state name="wait-for-frame-load">
+		<event>
+			<condition>
+				<frameLoaded />
+			</condition>
+			<action>
+				<goto state="loading" />
+			</action>
+		</event>
+	</state>
+
+	<state name="loading">
+		<event>
+			<condition>
+				<javascript script="check = document.getElementById('videoPlayer') == null ? 1 : 0" matches="0" />
+			</condition>
+			<action>
+				<run script="player = document.getElementById('videoPlayer'); player.setVolume(1);" />
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+
+	<state name="playing">
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<!-- Pause the player -->
+				<run script="player.pauseMovie();" />
+				<goto state="paused" />
+			</action>
+		</event>
+	</state>
+
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<!-- Start the player -->
+				<run script="player.playMovie();" />
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+
+</site>
