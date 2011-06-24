@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site site="http://pitchfork.com/tv/"
+<site site="http://(www.)?pitchfork.com/tv/"
 	plugin="http://player.ooyala.com/static/cacheable/*"
 	agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"
 	initialState="wait-for-frame-load"
