@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.thedailyshow.com/full-episodes/"
+	    plugin="http://media.mtvnservices.com/.*episode"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="764" height="432" />
+
+	<seekbar type="simple">
+		<start x="56" y="442" />
+		<end   x="574" y="442" />
+		<played>
+			<color rgb="56b5d9" />
+		</played>
+	</seekbar>
+				
+<!-- PLAYING -->
+	<state name="playing">
+		
+<!-- Click to pause -->
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="20" y="444" />
+			</action>
+		</event>
+		
+<!-- Video ends -->
+		<event>
+			<condition>
+				<and>
+					<color x="561" y="442" rgb="56b5d9" />
+				</and>
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+<!-- PAUSED -->
+	<state name="paused">
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="20" y="444" />
+			</action>
+		</event>
+        		
+	</state>
+        
+</site>

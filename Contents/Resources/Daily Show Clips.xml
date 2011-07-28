@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.thedailyshow.com/watch"
+	    plugin="http://media.mtvnservices.com/.*"
+			initialState="playing"
+			version="1.0">
+			
+	<crop x="0" y="0" width="0" height="361" />
+
+	<condition name="paused">
+			<and>
+				<!-- Sometimes it's a funky color paused -->            
+				<color x="21"  y="378" rgb="ffffff" />
+			</and>
+
+	</condition>
+
+	<seekbar type="simple">
+		<start x="56" y="369" />
+		<end   x="435" y="369" />
+		<played>
+			<color rgb="56b5d9" />
+		</played>
+	</seekbar>
+
+	<!-- PLAYING -->
+	<state name="playing">
+		
+		<!-- Click to pause -->
+		<event>
+			<condition>
+				<command name="pause" />
+			</condition>
+			<action>
+				<click x="19" y="378" />
+			</action>
+		</event>
+
+		<!-- Detect paused video -->
+		<event>
+			<condition>
+				<condition name="paused" />
+			</condition>
+			<action>
+				<goto state="paused" />
+			</action>
+		</event>
+		
+		<!-- Video ends -->
+		<event>
+			<condition>
+				<and>
+					<color x="435" y="369" rgb="56b5d9" />
+				</and>
+			</condition>
+			<action>
+				<goto state="end" />
+			</action>
+		</event>
+	</state>
+	
+	<!-- PAUSED -->
+	<state name="paused">
+		
+		<!-- Wait for play command -->
+		<event>
+			<condition>
+				<command name="play" />
+			</condition>
+			<action>
+				<click x="19" y="378" />
+			</action>
+		</event>
+		
+		<event>
+			<condition>
+				<not>
+					<condition name="paused" />
+				</not>
+			</condition>
+			<action>
+				<goto state="playing" />
+			</action>
+		</event>
+	</state>
+</site>
