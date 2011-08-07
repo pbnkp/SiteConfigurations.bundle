@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site site="http://www.colbertnation.com/the-colbert-report-videos/"
-	    plugin="http://media.mtvnservices.com/.*"
-			initialState="playing"
-			version="1.0">
-			
-	<crop x="0" y="0" width="480" height="360" />
+	plugin="http://media.mtvnservices.com/mgid:cms:video:.*"
+	initialState="playing"
+	version="1.0">
+
+	<crop x="0" y="0" width="0" height="361" />
 
 	<condition name="paused">
 		<or>
@@ -24,17 +24,16 @@
 		</or>
 	</condition>
 
-	<seekbar type="thumb">
-		<start x="44" y="371" />
-		<end   x="291" y="371" />
+	<seekbar type="simple">
+		<start x="56" y="369" />
+		<end   x="435" y="369" />
 		<played>
-			<color rgb="d3d3d3" />
+			<color rgb="56b5d9" />
 		</played>
 	</seekbar>
 
 	<!-- PLAYING -->
 	<state name="playing">
-		
 		<!-- Click to pause -->
 		<event>
 			<condition>
@@ -54,15 +53,12 @@
 				<goto state="paused" />
 			</action>
 		</event>
-		
+
 		<!-- Video ends -->
 		<event>
 			<condition>
 				<and>
-					<color x="100" y="100" rgb="363636" />
-					<color x="100" y="200" rgb="363636" />
-					<color x="400" y="100" rgb="363636" />
-					<color x="400" y="200" rgb="363636" />
+					<color x="435" y="369" rgb="56b5d9" />
 				</and>
 			</condition>
 			<action>
@@ -70,10 +66,9 @@
 			</action>
 		</event>
 	</state>
-	
+
 	<!-- PAUSED -->
 	<state name="paused">
-		
 		<!-- Wait for play command -->
 		<event>
 			<condition>
@@ -83,7 +78,7 @@
 				<click x="19" y="371" />
 			</action>
 		</event>
-		
+
 		<event>
 			<condition>
 				<not>
