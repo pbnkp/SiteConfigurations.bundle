@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site site="http://watch.(ctv.ca|ctv.ca/news|tsn.ca|discoverychannel.ca|thecomdeynetwork.ca|bravo.ca|bravofact.com|spacecast.com)/.*#Flash"
-	    plugin="http://watch.(ctv.ca|ctv.ca/news|tsn.ca|discoverychannel.ca|thecomdeynetwork.ca|bravo.ca|bravofact.com|spacecast.com)/.*player.swf.*"
+<site site="http://watch.(ctv.ca|ctv.ca/news|tsn.ca|discoverychannel.ca|thecomedynetwork.ca|bravo.ca|bravofact.com|spacecast.com)/.*#Flash"
+	    plugin="http://watch.(ctv.ca|ctv.ca/news|tsn.ca|discoverychannel.ca|thecomedynetwork.ca|bravo.ca|bravofact.com|spacecast.com)/.*player.swf.*"
 			initialState="playing"
 			version="1.0">
 			
