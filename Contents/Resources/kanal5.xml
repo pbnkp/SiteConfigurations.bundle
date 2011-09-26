@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site site="http://www.kanal5play.se"
+            plugin="http://c.brightcove.com/services/viewer/"
+                        initialState="playing"
+                        version="1.0">
+        
+        <!--<site agent="Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_5; en-us) AppleWebKit/525.26.2 (KHTML, like Gecko) Version/3.2 Safari/525.26.12"> -->
+        
+        <crop x="30" y="60" width="640" height="360" />
+        <!-- <seekbar type="simple">
+                <start x="72" y="324" />
+                <end   x="440" y="324" />
+                <played>
+                                <color rgb="A8DC2C" />
+                                
+                </played>
+        </seekbar>
+-->
+        <!-- PLAYING -->
+        <state name="playing">
+                <event>
+                        <condition>
+                                <command name="pause" />
+                        </condition>
+                        <action>
+                                <click x="35" y="324" />
+                                <goto state="paused" />
+                        </action>
+                </event>
+                
+                <!-- Video ends
+                <event>    
+                        <condition>
+                                <color x="190" y="310" rgb="444241"/>
+                        </condition>
+                        <and>
+                        <condition>
+                                <color x="240" y="210" rgb="006aaf"/>
+                        </condition>
+                        </and>
+                        <action>
+                                <goto state="end" />
+                        </action>
+                </event>-->
+        </state>
+        
+        <!-- PAUSED -->
+        <state name="paused">
+                <event>
+                        <condition>
+                                <command name="play" />
+                        </condition>
+                        <action>
+                                <click x="65" y="354" />
+                                <goto state="playing" />
+                        </action>
+                </event>
+        </state>
+</site>
